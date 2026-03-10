@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài tập Tiếng Anh</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; display: flex; justify-content: center; padding: 40px; }
+        .container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 800px; width: 100%; }
+        .word-bank { display: flex; gap: 12px; flex-wrap: wrap; background: #f8f9fa; padding: 20px; border-radius: 15px; border: 2px solid #e9ecef; margin-bottom: 30px; }
+        .word { padding: 10px 18px; background: #fff; border: 2px solid #007bff; border-radius: 8px; cursor: grab; font-weight: 600; transition: transform 0.2s; }
+        .word:hover { transform: translateY(-3px); background: #007bff; color: white; }
+        .gap { display: inline-block; width: 110px; height: 35px; border-bottom: 3px dashed #adb5bd; text-align: center; margin: 0 5px; font-weight: bold; transition: all 0.3s; vertical-align: middle; }
+        .correct { border-bottom: 3px solid #28a745; color: #28a745; }
+        .wrong { border-bottom: 3px solid #dc3545; color: #dc3545; animation: shake 0.3s; }
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h3>Điền vào chỗ trống (Thì Quá khứ đơn)</h3>
+    <button onclick="activateAudio()" style="margin-bottom:15px;">Bật âm thanh (Bấm vào đây)</button>
+    
+    <div class="word-bank" id="bank">
+        <div class="word" draggable="true" ondragstart="drag(event)" id="be">be</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="take">take</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="mean">mean</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="receive">receive</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="invent">invent</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="replace">replace</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="increase">increase</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="own">own</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="ride">ride</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="walk">walk</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="allow">allow</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="lay">lay</div>
+    </div>
+
+    <p>It was not long ago that the postal service <span class="gap" ondrop="drop(event, 'be', 'was')" ondragover="allowDrop(event)"></span> (2) our only way... It <span class="gap" ondrop="drop(event, 'take', 'took')" ondragover="allowDrop(event)"></span> (3) days... the news <span class="gap" ondrop="drop(event, 'be', 'was')" ondragover="allowDrop(event)"></span> (4)... when people <span class="gap" ondrop="drop(event, 'receive', 'received')" ondragover="allowDrop(event)"></span> (5)... this <span class="gap" ondrop="drop(event, 'mean', 'meant')" ondragover="allowDrop(event)"></span> (6)...</p>
+
+    <p>When Bell <span class="gap" ondrop="drop(event, 'invent', 'invented')" ondragover="allowDrop(event)"></span> (7) it <span class="gap" ondrop="drop(event, 'lay', 'laid')" ondragover="allowDrop(event)"></span> (8)... The telephone <span class="gap" ondrop="drop(event, 'allow', 'allowed')" ondragover="allowDrop(event)"></span> (9)... Computers <span class="gap" ondrop="drop(event, 'replace', 'replaced')" ondragover="allowDrop(event)"></span> (10)... dramatically <span class="gap" ondrop="drop(event, 'increase', 'increased')" ondragover="allowDrop(event)"></span> (11)...</p>
+
+    <p>50 years ago most people <span class="gap" ondrop="drop(event, 'own', 'did not own')" ondragover="allowDrop(event)"></span> (12)... People <span class="gap" ondrop="drop(event, 'walk', 'walked')" ondragover="allowDrop(event)"></span> (13)... or <span class="gap" ondrop="drop(event, 'ride', 'rode')" ondragover="allowDrop(event)"></span> (14)...</p>
+</div>
+
+<script>
+    let audioEnabled = false;
+    function activateAudio() { audioEnabled = true; alert("Âm thanh đã sẵn sàng!"); }
+
+    function allowDrop(ev) { ev.preventDefault(); }
+    function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+    
+    function drop(ev, wordId, correctForm) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        if (data === wordId) {
+            ev.target.innerText = correctForm;
+            ev.target.className = "gap correct";
+            if(audioEnabled) new Audio('correct.mp3').play();
+        } else {
+            ev.target.className = "gap wrong";
+            if(audioEnabled) new Audio('wrong.mp3').play();
+            setTimeout(() => { ev.target.className = "gap"; }, 1000);
+        }
+    }
+</script>
+</body>
+</html>
